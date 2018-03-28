@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "name": "utils",
+      "children": [
+        {
+          "name": "utils/clone.js",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "name": "apps/footer",
+      "children": [
+        {
+          "name": "apps/footer/index.js",
+          "targets": [ "apps/footer/components/Footer.jsx" ]
+        },
+        {
+          "name": "apps/footer/components/Footer.jsx",
+          "targets": [ "apps/footer/components/FooterButton.jsx", "utils/clone.js" ]
+        },
+        {
+          "name": "apps/footer/components/FooterButton.jsx",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "name": "layout",
+      "children": [
+        {
+          "name": "layout/index.js",
+          "targets": [ "apps/footer/index.js" ]
+        }
+      ]
+    }
+  ]
+}

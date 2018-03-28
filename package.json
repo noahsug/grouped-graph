@@ -1,0 +1,52 @@
+{
+  "name": "speedy-tree",
+  "version": "0.1.0",
+  "description": "Performant tree visualization widget",
+  "main": "src/index.js",
+  "scripts": {
+    "clean": "shx rm -rf dist && rm -f example/bundle.js",
+    "prepare": "npm run clean && NODE_ENV=production webpack -p --progress",
+    "build:watch": "webpack --watch",
+    "start": "npm run clean && webpack && webpack-dev-server",
+    "patch": "VERSION=patch npm run publish:version",
+    "minor": "VERSION=minor npm run publish:version",
+    "major": "VERSION=major npm run publish:version",
+    "publish:version": "npm whoami && npm version $VERSION && npm publish && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:noahsug/speedy-tree.git"
+  },
+  "keywords": [
+    "speedy",
+    "tree",
+    "graph",
+    "d3",
+    "visualizer",
+    "visualization",
+    "widget",
+    "fast"
+  ],
+  "author": "Noah Sugarman <noahsug@gmail.com.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noahsug/speedy-tree/issues"
+  },
+  "homepage": "https://github.com/noahsug/speedy-tree#readme",
+  "dependencies": {
+    "d3": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.3",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-airbnb": "^2.4.0",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "gh-pages-deploy": "^0.4.2",
+    "shx": "^0.2.2",
+    "style-loader": "^0.20.2",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.9",
+    "webpack-dev-server": "^3.1.0"
+  }
+}
