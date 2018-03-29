@@ -3,5 +3,7 @@ import data from './data.json'
 
 const root = document.querySelector('.visualization')
 
-const visualization = speedyTree.createVisualization(data)
+const visualization = speedyTree.createVisualization(data, {
+  rootNode: 'layout',
+})
 visualization.attach(root)
