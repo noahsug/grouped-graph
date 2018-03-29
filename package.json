@@ -1,8 +1,8 @@
 {
   "name": "speedy-tree",
   "version": "0.1.0",
-  "description": "Performant tree visualization widget",
-  "main": "src/index.js",
+  "description": "Nested tree visualization widget",
+  "main": "index.js",
   "scripts": {
     "clean": "shx rm -rf dist && rm -f example/bundle.js",
     "prepare": "npm run clean && NODE_ENV=production webpack -p --progress",
