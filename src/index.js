@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import './tree.css'
 import { deepCopy } from './utils'
 
 function createVisualization(data) {
@@ -35,7 +34,7 @@ function createVisualization(data) {
 
     return childTargets
       .map(childTarget => getParent(childTarget, nodeData))
-      .filter(target => target.name !== node.name)
+      .filter(target => target && target.name !== node.name)
   }
 
   function getParent(name, nodeData) {

@@ -1,14 +1,11 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const DEV = process.env.NODE_ENV !== 'production'
+const path = require('path')
 
 module.exports = {
-  entry: {
-    'dist/speedy-tree': './src/index.js',
-    'example/bundle': './example/app.js',
-  },
+  entry: './example/app.js',
   output: {
-    path: __dirname,
-    filename: '[name].js',
+    path: path.join(__dirname, 'example'),
+    filename: 'bundle.js',
   },
 
   module: {
@@ -28,7 +25,7 @@ module.exports = {
     ],
   },
 
-  plugins: [new ExtractTextPlugin('dist/styles.css')],
+  plugins: [new ExtractTextPlugin('styles.css')],
 
-  mode: DEV ? 'development' : 'production',
+  mode: 'development',
 }

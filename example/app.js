@@ -1,4 +1,4 @@
-import speedyTree from '../src/index'
+import speedyTree from '../lib/index'
 import data from './data.json'
 
 const root = document.querySelector('.visualization')
