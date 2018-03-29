@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
 import { deepCopy } from './utils'
+import render, { getNodeRadius } from './render'
 
 function createVisualization(data, config = {}) {
   const root = document.createElement('div')
@@ -27,68 +28,15 @@ function createVisualization(data, config = {}) {
     })
   })
 
-  function getTargets(node, nodeData) {
-    const childTargets = node.children.reduce((total, current) => {
-      return total.concat(current.targets)
-    }, [])
-
-    return childTargets
-      .map(childTarget => getParent(childTarget, nodeData))
-      .filter(target => target && target.name !== node.name)
-  }
-
-  function getParent(name, nodeData) {
-    return nodeData.find(parent => {
-      const children = parent.children.map(child => child.name)
-      return children.includes(name)
-    })
-  }
-
-  const svg = d3
-    .select(root)
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-
-  const link = svg
-    .selectAll('line.link')
-    .data(linkData)
-    .enter()
-    .append('svg:line')
-    .attr('class', 'link')
-    .attr('marker-end', 'url(#end)')
-
-  const node = svg
-    .selectAll('g.node')
-    .data(nodeData)
-    .enter()
-    .append('svg:g')
-    .attr('class', 'node')
-  node.append('svg:circle').attr('r', getNodeRadius)
-
-  const labelAnchor = svg
-    .selectAll('g.labelAnchor')
-    .data(labelAnchorData)
-    .enter()
-    .append('svg:g')
-    .attr('class', 'label-anchor')
-  labelAnchor.append('svg:text').text(d => (d.label ? d.node.name : ''))
-
-  svg
-    .append('svg:defs')
-    .selectAll('marker')
-    .data(['end'])
-    .enter()
-    .append('svg:marker') // This section adds in the arrows
-    .attr('id', d => d)
-    .attr('viewBox', '0 -5 10 10')
-    .attr('refX', 10)
-    .attr('refY', 0)
-    .attr('markerWidth', 5)
-    .attr('markerHeight', 5)
-    .attr('orient', 'auto')
-    .append('svg:path')
-    .attr('d', 'M0,-5L10,0L0,5')
+  const { svg, link, node, labelAnchor } = render(
+    root,
+    {
+      links: linkData,
+      nodes: nodeData,
+      labelAnchors: labelAnchorData,
+    },
+    { width, height }
+  )
 
   const nodeLinkForce = d3
     .forceLink(linkData)
@@ -118,6 +66,145 @@ function createVisualization(data, config = {}) {
     labelAnchor.each(d => {
       d.x = d.node.x
       d.y = d.node.y + 15
+    })
+  }
+
+  // set to true when a node is clicked
+  let keepHighlight = false
+
+  node.on('mouseenter', function(d) {
+    if (keepHighlight) return
+    d3.select(this.childNodes[0]).attr('r', getNodeRadius(d) * 1.2)
+    highlightFromNode(d)
+  })
+
+  node.on('mouseleave', function(d) {
+    if (keepHighlight) return
+    d3.select(this.childNodes[0]).attr('r', getNodeRadius(d))
+    unhightlight()
+  })
+
+  let clickedNode = false
+  node.on('click', d => {
+    highlightFromNode(d)
+    keepHighlight = clickedNode = true
+  })
+  svg.on('click', () => {
+    if (clickedNode) {
+      clickedNode = false
+    } else {
+      keepHighlight = false
+      unhightlight()
+    }
+  })
+
+  function highlightFromNode(d) {
+    const highlightedLinks = getShortestPathFromRoot(d)
+    const connectedLinks = getConnectedLinks(d, linkData)
+    d3
+      .selectAll('line.link')
+      .attr('class', link => {
+        const classList = ['link']
+        if (highlightedLinks.has(link)) {
+          classList.push('highlight')
+        } else if (!connectedLinks.has(link)) {
+          classList.push('fade')
+        }
+        return classList.join(' ')
+      })
+      .attr(
+        'marker-end',
+        d => (highlightedLinks.has(d) ? 'url(#highlight)' : 'url(#normal)')
+      )
+
+    const highlightedNodes = new Set([
+      ...getNodesFromLinks(highlightedLinks),
+      ...getNodesFromLinks(connectedLinks),
+    ])
+    d3.selectAll('g.node').attr('class', node => {
+      const classList = ['node']
+      if (!highlightedNodes.has(node)) classList.push('fade')
+      return classList.join(' ')
+    })
+
+    d3.selectAll('g.label-anchor').attr('class', anchor => {
+      const classList = ['label-anchor']
+      if (!highlightedNodes.has(anchor.node)) classList.push('fade')
+      return classList.join(' ')
+    })
+  }
+
+  function unhightlight() {
+    d3
+      .selectAll('line.link')
+      .attr('class', 'link')
+      .attr('marker-end', 'url(#normal)')
+    d3.selectAll('g.node').attr('class', 'node')
+    d3.selectAll('g.label-anchor').attr('class', 'label-anchor')
+  }
+
+  function getNodesFromLinks(links) {
+    const nodes = new Set()
+    links.forEach(link => {
+      nodes.add(link.target)
+      nodes.add(link.source)
+    })
+    return nodes
+  }
+
+  function getConnectedLinks(node, linkData) {
+    return new Set(
+      linkData.filter(link => link.target === node || link.source === node)
+    )
+  }
+
+  const rootNode = nodeData.find(n => n.name === 'header')
+  // const rootNode = nodeData.find(n => n.name === 'layout')
+
+  function getShortestPathFromRoot(node) {
+    const childToLink = buildChildToLinkMap(node)
+    const path = new Set()
+    let next = node
+    while (next !== rootNode) {
+      const link = childToLink.get(next)
+      if (!link) break
+      path.add(link)
+      next = link.source
+    }
+    return path
+  }
+
+  function buildChildToLinkMap(node) {
+    const childToLink = new Map()
+    const stack = [rootNode]
+    while (stack.length) {
+      const node = stack.pop()
+      const links = linkData.filter(link => link.source === node)
+      links.forEach(link => {
+        const child = link.target
+        if (childToLink.has(child)) return
+        childToLink.set(child, link)
+        stack.push(child)
+      })
+    }
+    return childToLink
+  }
+
+  function getTargets(node, nodeData) {
+    const childTargets = node.children.reduce((total, current) => {
+      return total.concat(current.targets)
+    }, [])
+
+    const targets = childTargets
+      .map(childTarget => getParent(childTarget, nodeData))
+      .filter(target => target && target.name !== node.name)
+    return Array.from(new Set(targets))
+  }
+
+  function getParent(name, nodeData) {
+    return nodeData.find(parent => {
+      const children = parent.children.map(child => child.name)
+      return children.includes(name)
     })
   }
 
@@ -172,10 +259,6 @@ function createVisualization(data, config = {}) {
       .attr('y1', d => getLinkEnd(d.target, d.source).y)
       .attr('x2', d => getLinkEnd(d.source, d.target).x)
       .attr('y2', d => getLinkEnd(d.source, d.target).y)
-  }
-
-  function getNodeRadius(node) {
-    return 5 + Math.sqrt(node.children.length)
   }
 
   function updateNode(node) {

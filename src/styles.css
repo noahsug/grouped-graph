@@ -1,19 +1,40 @@
-.node circle {
+g.node.fade {
+  opacity: 0.1;
+}
+
+g.node circle {
   fill: #fff;
   stroke: steelblue;
   stroke-width: 2px;
 }
 
-.label-anchor text {
+g.label-anchor.fade {
+  opacity: 0.1;
+}
+
+g.label-anchor text {
   font: 12px sans-serif;
 }
 
-.link {
+line.link {
   fill: none;
   stroke: #ccc;
+  stroke-width: 2px;
+}
+
+line.link.highlight {
+  stroke: #ffcccc;
   stroke-width: 3px;
 }
 
-marker {
+line.link.fade {
+  opacity: 0.1;
+}
+
+marker#normal {
   fill: #ccc;
+}
+
+marker#highlight {
+  fill: #ffcccc;
 }
