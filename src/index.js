@@ -1,20 +1,20 @@
 import * as d3 from 'd3'
 import { deepCopy } from './utils'
 
-function createVisualization(data) {
+function createVisualization(data, config = {}) {
   const root = document.createElement('div')
-  const width = 600
-  const height = 600
+  const width = config.width || 600
+  const height = config.height || 600
 
   const nodeData = deepCopy(data.nodes)
 
   const labelAnchorData = []
+  const labelLinkData = []
   nodeData.forEach(node => {
     labelAnchorData.push({ node, label: true })
     labelAnchorData.push({ node })
   })
 
-  const labelLinkData = []
   nodeData.forEach((node, i) => {
     labelLinkData.push({ source: i * 2, target: i * 2 + 1 })
   })
@@ -90,7 +90,10 @@ function createVisualization(data) {
     .append('svg:path')
     .attr('d', 'M0,-5L10,0L0,5')
 
-  const nodeLinkForce = d3.forceLink(linkData).distance(100)
+  const nodeLinkForce = d3
+    .forceLink(linkData)
+    .distance(200)
+    .strength(0.01)
 
   const nodeForce = d3
     .forceSimulation(nodeData)
@@ -101,7 +104,7 @@ function createVisualization(data) {
   const labelAnchorLinkForce = d3
     .forceLink(labelLinkData)
     .strength(8)
-    .distance(15)
+    .distance(d => 8 + getNodeRadius(d.source.node) * 1.1)
 
   const labelAnchorForce = d3
     .forceSimulation(labelAnchorData)
@@ -169,14 +172,10 @@ function createVisualization(data) {
       .attr('y1', d => getLinkEnd(d.target, d.source).y)
       .attr('x2', d => getLinkEnd(d.source, d.target).x)
       .attr('y2', d => getLinkEnd(d.source, d.target).y)
-    // .attr('x1', d => d.source.x)
-    //.attr('y1', d => d.source.y)
-    //.attr('x2', d => d.target.x)
-    //.attr('y2', d => d.target.y)
   }
 
   function getNodeRadius(node) {
-    return 5 + node.children.length
+    return 5 + Math.sqrt(node.children.length)
   }
 
   function updateNode(node) {
