@@ -35,5 +35,6 @@
         }
       ]
     }
-  ]
+  ],
+  "rootNode": "layout"
 }

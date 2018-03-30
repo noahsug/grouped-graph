@@ -1,10 +1,10 @@
 import { deepCopy } from './utils'
 
-function getData(input, rootNode) {
+function getData(input) {
   const data = {}
 
   data.nodes = deepCopy(input.nodes)
-  data.rootNode = data.nodes.find(n => n.name === rootNode)
+  data.rootNode = data.nodes.find(n => n.name === input.rootNode)
 
   data.labelAnchors = []
   data.labelLinks = []

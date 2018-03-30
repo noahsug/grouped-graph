@@ -9,7 +9,7 @@ function createVisualization(inputData, config = {}) {
   const width = config.width || 600
   const height = config.height || 600
 
-  const data = getData(inputData, config.rootNode)
+  const data = getData(inputData)
 
   const vis = render(root, data, { width, height })
 
