@@ -40,6 +40,7 @@ npm install --save grouped-graph
 
 ```js
 import groupedGraph from 'grouped-graph'
+import 'grouped-graph/lib/styles.css'
 import data from './data.json'
 
 const root = document.querySelector('.visualization')
