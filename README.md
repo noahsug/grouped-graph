@@ -8,6 +8,11 @@ Check out the demo [here](https://noahsug.github.io/grouped-graph/example).
 The graph above is generated using this data: [example/data.json](https://github.com/noahsug/grouped-graph/blob/master/example/data.json).
 
 
+### Installation
+```sh
+npm install --save grouped-graph
+```
+
 ### Api
 
 ```js
