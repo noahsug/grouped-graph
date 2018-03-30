@@ -1,7 +1,7 @@
 {
-  "name": "speedy-tree",
+  "name": "grouped-graph",
   "version": "0.1.0",
-  "description": "Nested tree visualization widget",
+  "description": "Nested graph visualization widget",
   "main": "lib",
   "scripts": {
     "clean": "shx rm -rf lib && rm -f example/bundle.js",
@@ -18,24 +18,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:noahsug/speedy-tree.git"
+    "url": "git@github.com:noahsug/grouped-graph.git"
   },
   "keywords": [
-    "speedy",
-    "tree",
+    "grouped",
     "graph",
+    "tree",
     "d3",
     "visualizer",
     "visualization",
-    "widget",
-    "fast"
+    "widget"
   ],
   "author": "Noah Sugarman <noahsug@gmail.com.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/noahsug/speedy-tree/issues"
+    "url": "https://github.com/noahsug/grouped-graph/issues"
   },
-  "homepage": "https://github.com/noahsug/speedy-tree#readme",
+  "homepage": "https://github.com/noahsug/grouped-graph#readme",
   "dependencies": {
     "d3": "^5.0.0"
   },
