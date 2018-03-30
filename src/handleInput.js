@@ -107,16 +107,18 @@ function getShortestPathFromRoot(node, data) {
 
 function buildChildToLinkMap(node, data) {
   const childToLink = new Map()
-  const stack = [data.rootNode]
-  while (stack.length) {
-    const node = stack.pop()
+  const queue = [data.rootNode]
+  while (queue.length) {
+    const node = queue.shift()
     const links = data.links.filter(link => link.source === node)
-    links.forEach(link => {
+    const foundNode = links.find(link => {
       const child = link.target
-      if (childToLink.has(child)) return
+      if (childToLink.has(child)) return false
       childToLink.set(child, link)
-      stack.push(child)
+      queue.push(child)
+      return child === node
     })
+    if (foundNode) break
   }
   return childToLink
 }
