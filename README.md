@@ -30,14 +30,12 @@ The graph above is generated using [example/data.json](https://github.com/noahsu
         }, {
 ```
 
-
 ### Installation
 ```sh
 npm install --save grouped-graph
 ```
 
 ### Api
-
 ```js
 import groupedGraph from 'grouped-graph'
 import 'grouped-graph/lib/styles.css'
@@ -50,9 +48,7 @@ const visualization = groupedGraph.createVisualization(data, options)
 visualization.attach(root)
 ```
 
-
 ### Development
-
 ```sh
 git clone git@github.com:noahsug/grouped-graph.git
 cd grouped-graph
