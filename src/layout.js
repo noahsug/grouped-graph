@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { getNodeRadius } from './shared'
 
-function runGraphLayout(data, vis, config) {
+function layout(data, vis, config) {
   const layouts = {
     node: getNodeLayout(data, config),
     label: getLabelLayout(data),
@@ -25,7 +25,7 @@ function getNodeLayout(data, { width, height }) {
 
   return d3
     .forceSimulation(data.nodes)
-    .force('charge', d3.forceManyBody())
+    .force('charge', d3.forceManyBody().strength(-350))
     .force('center', d3.forceCenter(width / 2, height / 2))
     .force('link', nodeLinkForce)
 }
@@ -103,4 +103,4 @@ function updateNode(node) {
   node.attr('transform', d => `translate(${d.x}, ${d.y})`)
 }
 
-export default runGraphLayout
+export default layout

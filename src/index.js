@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import render from './render'
 import getData from './getData'
-import runGraphLayout from './runGraphLayout'
+import layout from './layout'
 import handleInput from './handleInput'
 
 function createVisualization(inputData, config = {}) {
@@ -13,7 +13,7 @@ function createVisualization(inputData, config = {}) {
 
   const vis = render(root, data, { width, height })
 
-  runGraphLayout(data, vis, { width, height })
+  layout(data, vis, { width, height })
 
   handleInput(data, vis)
 
