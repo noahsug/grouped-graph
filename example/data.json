@@ -1,37 +1,80 @@
 {
   "nodes": [
     {
+      "name": "layout",
+      "children": [
+        {
+          "name": "layout/index.js",
+          "targets": [ "footer/index.js", "header/index.js" ]
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "children": [
+        {
+          "name": "footer/index.js",
+          "targets": [ "footer/components/Footer.jsx" ]
+        }, {
+          "name": "footer/components/Footer.jsx",
+          "targets": [ "footer/components/FooterAnimation.jsx", "utils/clone.js" ]
+        }, {
+          "name": "footer/components/FooterAnimation.jsx",
+          "targets": [ "utils/animate.js", "footer/components/FooterButton.jsx" ]
+        }, {
+          "name": "footer/components/FooterText.jsx",
+          "targets": [ "debounce.js", "shared/Button.jsx" ]
+        }
+      ]
+    },
+    {
+      "name": "header",
+      "children": [
+        {
+          "name": "header/index.js",
+          "targets": [ "header/components/HeaderButton.jsx" ]
+        }, {
+          "name": "header/components/HeaderButton.jsx",
+          "targets": [ "shared/Button.jsx" ]
+        }
+      ]
+    },
+    {
+      "name": "debounce.js",
+      "children": [
+        {
+          "name": "debounce.js",
+          "targets": [ ]
+        }
+      ]
+    },
+    {
       "name": "utils",
       "children": [
         {
           "name": "utils/clone.js",
           "targets": []
+        }, {
+          "name": "utils/animate.js",
+          "targets": [ "vendor/d3.js", "debounce.js" ]
         }
       ]
     },
     {
-      "name": "apps/footer",
+      "name": "shared",
       "children": [
         {
-          "name": "apps/footer/index.js",
-          "targets": [ "apps/footer/components/Footer.jsx" ]
-        },
+          "name": "shared/Button.jsx",
+          "targets": [ "utils/clone.js" ]
+        }
+      ]
+    },
+    {
+      "name": "vendor",
+      "children": [
         {
-          "name": "apps/footer/components/Footer.jsx",
-          "targets": [ "apps/footer/components/FooterButton.jsx", "utils/clone.js" ]
-        },
-        {
-          "name": "apps/footer/components/FooterButton.jsx",
+          "name": "vendor/d3.js",
           "targets": []
-        }
-      ]
-    },
-    {
-      "name": "layout",
-      "children": [
-        {
-          "name": "layout/index.js",
-          "targets": [ "apps/footer/index.js" ]
         }
       ]
     }
