@@ -1,5 +1,5 @@
 # Grouped Graph
-> Grouped graph visualization widget.
+> Visualize dependencies between high level components.
 
 Check out the demo [here](https://noahsug.github.io/grouped-graph/example).
 
