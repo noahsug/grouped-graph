@@ -16,7 +16,7 @@ npm install --save grouped-graph
 ### Api
 
 ```js
-import groupedGraph from '../src/index'
+import groupedGraph from 'grouped-graph'
 import data from './data.json'
 
 const root = document.querySelector('.visualization')
