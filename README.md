@@ -1,11 +1,34 @@
 # Grouped Graph
-> Visualize dependencies between grouped components.
+> Visualize dependencies between groups of components.
 
 Check out the demo [here](https://noahsug.github.io/grouped-graph/example).
 
 ![](https://github.com/noahsug/grouped-graph/blob/master/example.png)
 
-The graph above is generated using [example/data.json](https://github.com/noahsug/grouped-graph/blob/master/example/data.json).
+The graph above is generated using [example/data.json](https://github.com/noahsug/grouped-graph/blob/master/example/data.json):
+
+```json
+{
+  "nodes": [
+    {
+      "name": "layout",
+      "children": [
+        {
+          "name": "layout/index.js",
+          "targets": [ "footer/index.js", "header/index.js" ]
+        }
+      ]
+    }, {
+      "name": "footer",
+      "children": [
+        {
+          "name": "footer/index.js",
+          "targets": [ "footer/components/Footer.jsx" ]
+        }, {
+          "name": "footer/components/Footer.jsx",
+          "targets": [ "footer/components/FooterAnimation.jsx", "utils/clone.js" ]
+        }, {
+```
 
 
 ### Installation
