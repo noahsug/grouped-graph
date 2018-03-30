@@ -1,6 +1,6 @@
 {
   "name": "grouped-graph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nested graph visualization widget",
   "main": "lib",
   "scripts": {
