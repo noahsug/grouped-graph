@@ -1,11 +1,11 @@
 # Grouped Graph
 > Grouped graph visualization widget.
 
-Check out the live (example)[https://noahsug.github.io/grouped-graph].
+Check out the demo [here](https://noahsug.github.io/grouped-graph/example).
 
 ![](https://github.com/noahsug/grouped-graph/blob/master/example.png)
 
-The graph above is generated using this data: [example/data.json]('https://github.com/noahsug/grouped-graph/blob/master/example/data.json').
+The graph above is generated using this data: [example/data.json](https://github.com/noahsug/grouped-graph/blob/master/example/data.json).
 
 
 ### Api
@@ -16,7 +16,8 @@ import data from './data.json'
 
 const root = document.querySelector('.visualization')
 
-const visualization = groupedGraph.createVisualization(data)
+const options = { width: 800, height: 800 }
+const visualization = groupedGraph.createVisualization(data, options)
 visualization.attach(root)
 ```
 
