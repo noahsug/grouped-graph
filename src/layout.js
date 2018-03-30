@@ -20,8 +20,7 @@ function layout(data, vis, config) {
 function getNodeLayout(data, { width, height }) {
   const nodeLinkForce = d3
     .forceLink(data.links)
-    .distance(200)
-    .strength(0.01)
+    .distance(100)
 
   return d3
     .forceSimulation(data.nodes)
