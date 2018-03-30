@@ -8,8 +8,7 @@
           "targets": [ "footer/index.js", "header/index.js" ]
         }
       ]
-    },
-    {
+    }, {
       "name": "footer",
       "children": [
         {
@@ -26,8 +25,7 @@
           "targets": [ "debounce.js", "shared/Button.jsx" ]
         }
       ]
-    },
-    {
+    }, {
       "name": "header",
       "children": [
         {
@@ -38,8 +36,7 @@
           "targets": [ "shared/Button.jsx" ]
         }
       ]
-    },
-    {
+    }, {
       "name": "debounce.js",
       "children": [
         {
@@ -47,8 +44,7 @@
           "targets": [ ]
         }
       ]
-    },
-    {
+    }, {
       "name": "utils",
       "children": [
         {
@@ -59,8 +55,7 @@
           "targets": [ "vendor/d3.js", "debounce.js" ]
         }
       ]
-    },
-    {
+    }, {
       "name": "shared",
       "children": [
         {
@@ -68,8 +63,7 @@
           "targets": [ "utils/clone.js" ]
         }
       ]
-    },
-    {
+    }, {
       "name": "vendor",
       "children": [
         {
