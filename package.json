@@ -47,7 +47,6 @@
     "babel-preset-airbnb": "^2.4.0",
     "css-loader": "^0.28.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "gh-pages-deploy": "^0.4.2",
     "shx": "^0.2.2",
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
