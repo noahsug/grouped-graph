@@ -4,7 +4,7 @@
   "description": "Nested graph visualization widget",
   "main": "lib",
   "scripts": {
-    "clean": "shx rm -rf lib && rm -f example/bundle.js",
+    "clean": "shx rm -rf lib && rm -f example/bundle.js && rm -f example/styles.css",
     "build": "npm run build:js && npm run build:css",
     "build:js": "babel src --out-dir lib",
     "build:css": "shx cp src/*.css lib/",
@@ -27,7 +27,9 @@
     "d3",
     "visualizer",
     "visualization",
-    "widget"
+    "widget",
+    "dependency",
+    "visualization"
   ],
   "author": "Noah Sugarman <noahsug@gmail.com.com>",
   "license": "MIT",

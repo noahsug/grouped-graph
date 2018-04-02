@@ -1,7 +1,11 @@
-# Grouped Graph
+# Grouped Dependency Graph
 > Visualize dependencies between groups of components.
 
-Check out the demo [here](https://noahsug.github.io/grouped-graph/example).
+Nodes are groups of components.
+
+Links are dependencies between components in one node to components in another node.
+
+Check out an example source code dependency graph [here](https://noahsug.github.io/grouped-graph/example).
 
 ![](https://github.com/noahsug/grouped-graph/blob/master/example.png)
 
@@ -9,6 +13,7 @@ The graph above is generated using [example/data.json](https://github.com/noahsu
 
 ```json
 {
+  "rootNode": "layout",
   "nodes": [
     {
       "name": "layout",
@@ -30,15 +35,20 @@ The graph above is generated using [example/data.json](https://github.com/noahsu
         }, {
 ```
 
+### Features
+Hovering over a node highlights the shortest path back to the `rootNode`.
+
+Clicking a node displays the list of the components within that node.
+
+
 ### Installation
 ```sh
 npm install --save grouped-graph
 ```
 
-### Api
+### API
 ```js
 import groupedGraph from 'grouped-graph'
-import 'grouped-graph/lib/styles.css'
 import data from './data.json'
 
 const root = document.querySelector('.visualization')

@@ -1,0 +1,27 @@
+.popup {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  text-align: left;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  font: 12px sans-serif;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.popup .row.highlight {
+  color: #ee8888;
+}
+
+.popup .row + .row {
+  margin-top: 5px;
+}
+
+.popup.hidden {
+  display: none;
+}

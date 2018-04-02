@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { getNodeRadius } from './shared'
 
-function handleInput(data, vis) {
+function handleInput(data, vis, popup) {
   // set to true when a node is clicked
   let keepHighlight = false
 
@@ -19,8 +19,10 @@ function handleInput(data, vis) {
 
   let clickedNode = false
   vis.node.on('click', d => {
-    highlightFromNode(d, data)
     keepHighlight = clickedNode = true
+    const { highlightedLinks } = highlightFromNode(d, data)
+    popup.setData({ selected: d, nodes: data.nodes, highlightedLinks })
+    popup.show()
   })
   vis.svg.on('click', () => {
     if (clickedNode) {
@@ -28,6 +30,7 @@ function handleInput(data, vis) {
     } else {
       keepHighlight = false
       unhightlight()
+      popup.hide()
     }
   })
 }
@@ -66,6 +69,8 @@ function highlightFromNode(d, data) {
     if (!highlightedNodes.has(anchor.node)) classList.push('fade')
     return classList.join(' ')
   })
+
+  return { highlightedLinks, highlightedNodes }
 }
 
 function unhightlight() {

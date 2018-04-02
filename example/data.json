@@ -1,4 +1,5 @@
 {
+  "rootNode": "layout",
   "nodes": [
     {
       "name": "layout",
@@ -72,6 +73,5 @@
         }
       ]
     }
-  ],
-  "rootNode": "layout"
+  ]
 }

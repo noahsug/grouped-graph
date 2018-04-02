@@ -3,6 +3,8 @@ import render from './render'
 import getData from './getData'
 import layout from './layout'
 import handleInput from './handleInput'
+import createPopup from './createPopup'
+import './graph.css'
 
 function createVisualization(inputData, config = {}) {
   const root = document.createElement('div')
@@ -13,12 +15,15 @@ function createVisualization(inputData, config = {}) {
 
   const vis = render(root, data, { width, height })
 
+  const popup = createPopup()
+
   layout(data, vis, { width, height })
 
-  handleInput(data, vis)
+  handleInput(data, vis, popup)
 
   function attach(container) {
     container.appendChild(root)
+    popup.attach(container)
   }
 
   return { attach }
