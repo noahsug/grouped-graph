@@ -1,7 +1,7 @@
 # Grouped Dependency Graph
 > Visualize dependencies between groups of components.
 
-Check out an example source code dependency graph [here](https://noahsug.github.io/grouped-graph/example).
+Check out an example source code dependency graph [here](https://noahsug.github.io/grouped-graph).
 
 ![](https://github.com/noahsug/grouped-graph/blob/master/example.png)
 
