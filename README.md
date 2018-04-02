@@ -1,10 +1,6 @@
 # Grouped Dependency Graph
 > Visualize dependencies between groups of components.
 
-Nodes are groups of components.
-
-Links are dependencies between components in one node to components in another node.
-
 Check out an example source code dependency graph [here](https://noahsug.github.io/grouped-graph/example).
 
 ![](https://github.com/noahsug/grouped-graph/blob/master/example.png)
