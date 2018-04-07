@@ -8,6 +8,11 @@ g.node circle {
   stroke-width: 2px;
 }
 
+g.node.root circle {
+  stroke: #b44682;
+  stroke-width: 3px;
+}
+
 g.label-anchor.fade {
   opacity: 0.1;
 }

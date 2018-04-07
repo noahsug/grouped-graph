@@ -5,7 +5,7 @@ function render(root, data, config) {
   const svg = renderSvg(root, config)
   renderLinkArrows(svg)
   const link = renderLinks(svg, data.links)
-  const node = renderNodes(svg, data.nodes)
+  const node = renderNodes(svg, data.nodes, data.rootNode)
   const labelAnchor = renderLabels(svg, data.labelAnchors)
   return { svg, link, node, labelAnchor }
 }
@@ -46,13 +46,13 @@ function renderLinks(svg, linkData) {
     .attr('marker-end', 'url(#normal)')
 }
 
-function renderNodes(svg, nodeData) {
+function renderNodes(svg, nodeData, rootNode) {
   const node = svg
     .selectAll('g.node')
     .data(nodeData)
     .enter()
     .append('svg:g')
-    .attr('class', 'node')
+    .attr('class', d => (d === rootNode ? 'node root' : 'node'))
   node.append('svg:circle').attr('r', getNodeRadius)
   return node
 }

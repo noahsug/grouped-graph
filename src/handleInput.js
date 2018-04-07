@@ -3,41 +3,54 @@ import { getNodeRadius } from './shared'
 
 function handleInput(data, vis, popup) {
   // set to true when a node is clicked
-  let keepHighlight = false
+  let selectedNode = false
 
   vis.node.on('mouseenter', function(d) {
-    if (keepHighlight) return
     d3.select(this.childNodes[0]).attr('r', getNodeRadius(d) * 1.2)
-    highlightFromNode(d, data)
+    if (selectedNode) {
+      const { highlightedLinks } = highlightShortestPath(d, selectedNode, data)
+      popup.setData({ selected: selectedNode, highlightedLinks })
+    } else {
+      highlightShortestPath(data.rootNode, d, data)
+    }
   })
 
   vis.node.on('mouseleave', function(d) {
-    if (keepHighlight) return
     d3.select(this.childNodes[0]).attr('r', getNodeRadius(d))
-    unhightlight()
+    if (selectedNode) {
+      const { highlightedLinks } = highlightShortestPath(
+        data.rootNode,
+        selectedNode,
+        data
+      )
+      popup.setData({ selected: selectedNode, highlightedLinks })
+    } else {
+      unhighlight(data.rootNode)
+    }
   })
 
+  // used to differentiate between node clicks and background clicks.
   let clickedNode = false
   vis.node.on('click', d => {
-    keepHighlight = clickedNode = true
-    const { highlightedLinks } = highlightFromNode(d, data)
-    popup.setData({ selected: d, nodes: data.nodes, highlightedLinks })
+    selectedNode = clickedNode = d
+    const { highlightedLinks } = highlightShortestPath(data.rootNode, d, data)
+    popup.setData({ selected: d, highlightedLinks })
     popup.show()
   })
   vis.svg.on('click', () => {
     if (clickedNode) {
       clickedNode = false
     } else {
-      keepHighlight = false
-      unhightlight()
+      selectedNode = false
+      unhighlight(data.rootNode)
       popup.hide()
     }
   })
 }
 
-function highlightFromNode(d, data) {
-  const highlightedLinks = getShortestPathFromRoot(d, data)
-  const connectedLinks = getConnectedLinks(d, data.links)
+function highlightShortestPath(from, to, data) {
+  const highlightedLinks = getShortestPath(from, to, data)
+  const connectedLinks = getConnectedLinks(to, data.links)
   d3
     .selectAll('line.link')
     .attr('class', link => {
@@ -61,6 +74,7 @@ function highlightFromNode(d, data) {
   d3.selectAll('g.node').attr('class', node => {
     const classList = ['node']
     if (!highlightedNodes.has(node)) classList.push('fade')
+    if (node === from) classList.push('root')
     return classList.join(' ')
   })
 
@@ -73,12 +87,14 @@ function highlightFromNode(d, data) {
   return { highlightedLinks, highlightedNodes }
 }
 
-function unhightlight() {
+function unhighlight(rootNode) {
   d3
     .selectAll('line.link')
     .attr('class', 'link')
     .attr('marker-end', 'url(#normal)')
-  d3.selectAll('g.node').attr('class', 'node')
+  d3
+    .selectAll('g.node')
+    .attr('class', d => (d === rootNode ? 'node root' : 'node'))
   d3.selectAll('g.label-anchor').attr('class', 'label-anchor')
 }
 
@@ -97,11 +113,11 @@ function getConnectedLinks(node, linkData) {
   )
 }
 
-function getShortestPathFromRoot(node, data) {
-  const childToLink = buildChildToLinkMap(node, data)
+function getShortestPath(from, to, data) {
+  const childToLink = buildChildToLinkMap(from, data)
   const path = new Set()
-  let next = node
-  while (next !== data.rootNode) {
+  let next = to
+  while (next !== from) {
     const link = childToLink.get(next)
     if (!link) break
     path.add(link)
@@ -110,20 +126,18 @@ function getShortestPathFromRoot(node, data) {
   return path
 }
 
-function buildChildToLinkMap(node, data) {
+function buildChildToLinkMap(from, data) {
   const childToLink = new Map()
-  const queue = [data.rootNode]
+  const queue = [from]
   while (queue.length) {
     const node = queue.shift()
     const links = data.links.filter(link => link.source === node)
-    const foundNode = links.find(link => {
+    links.forEach(link => {
       const child = link.target
-      if (childToLink.has(child)) return false
+      if (childToLink.has(child)) return
       childToLink.set(child, link)
       queue.push(child)
-      return child === node
     })
-    if (foundNode) break
   }
   return childToLink
 }

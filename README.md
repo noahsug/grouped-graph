@@ -32,9 +32,9 @@ The graph above is generated using [example/data.json](https://github.com/noahsu
 ```
 
 ### Features
-Hovering over a node highlights the shortest path back to the `rootNode`.
+Clicking a node displays the list of the components within that node and selects it.
 
-Clicking a node displays the list of the components within that node.
+Hovering over a node highlights the shortest path from the `rootNode` or selected node.
 
 
 ### Installation

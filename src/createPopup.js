@@ -5,7 +5,7 @@ function createPopup() {
   root.classList.add('popup')
   hide()
 
-  function setData({ selected, nodes, highlightedLinks }) {
+  function setData({ selected, highlightedLinks }) {
     clear(root)
 
     const highlighted = getHighlightedNodes({ selected, highlightedLinks })
