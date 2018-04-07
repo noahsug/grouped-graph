@@ -1,0 +1,72 @@
+.popup {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  text-align: left;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  font: 12px sans-serif;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.popup .row.highlight {
+  color: #ee8888;
+}
+
+.popup .row + .row {
+  margin-top: 5px;
+}
+
+.popup.hidden {
+  display: none;
+}
+g.node.fade {
+  opacity: 0.1;
+}
+
+g.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+g.node.root circle {
+  stroke: #b44682;
+  stroke-width: 3px;
+}
+
+g.label-anchor.fade {
+  opacity: 0.1;
+}
+
+g.label-anchor text {
+  font: 12px sans-serif;
+}
+
+line.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+line.link.highlight {
+  stroke: #ffcccc;
+  stroke-width: 3px;
+}
+
+line.link.fade {
+  opacity: 0.1;
+}
+
+marker#normal {
+  fill: #ccc;
+}
+
+marker#highlight {
+  fill: #ffcccc;
+}

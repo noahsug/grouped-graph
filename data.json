@@ -1,0 +1,77 @@
+{
+  "rootNode": "layout",
+  "nodes": [
+    {
+      "name": "layout",
+      "children": [
+        {
+          "name": "layout/index.js",
+          "targets": [ "footer/index.js", "header/index.js" ]
+        }
+      ]
+    }, {
+      "name": "footer",
+      "children": [
+        {
+          "name": "footer/index.js",
+          "targets": [ "footer/components/Footer.jsx" ]
+        }, {
+          "name": "footer/components/Footer.jsx",
+          "targets": [ "footer/components/FooterAnimation.jsx", "utils/clone.js" ]
+        }, {
+          "name": "footer/components/FooterAnimation.jsx",
+          "targets": [ "utils/animate.js", "footer/components/FooterButton.jsx" ]
+        }, {
+          "name": "footer/components/FooterText.jsx",
+          "targets": [ "debounce.js", "shared/Button.jsx" ]
+        }
+      ]
+    }, {
+      "name": "header",
+      "children": [
+        {
+          "name": "header/index.js",
+          "targets": [ "header/components/HeaderButton.jsx" ]
+        }, {
+          "name": "header/components/HeaderButton.jsx",
+          "targets": [ "shared/Button.jsx" ]
+        }
+      ]
+    }, {
+      "name": "debounce.js",
+      "children": [
+        {
+          "name": "debounce.js",
+          "targets": [ ]
+        }
+      ]
+    }, {
+      "name": "utils",
+      "children": [
+        {
+          "name": "utils/clone.js",
+          "targets": []
+        }, {
+          "name": "utils/animate.js",
+          "targets": [ "vendor/d3.js", "debounce.js" ]
+        }
+      ]
+    }, {
+      "name": "shared",
+      "children": [
+        {
+          "name": "shared/Button.jsx",
+          "targets": [ "utils/clone.js" ]
+        }
+      ]
+    }, {
+      "name": "vendor",
+      "children": [
+        {
+          "name": "vendor/d3.js",
+          "targets": []
+        }
+      ]
+    }
+  ]
+}
