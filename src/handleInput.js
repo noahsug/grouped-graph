@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { getNodeRadius } from './shared'
 
-function handleInput(data, vis, popup) {
+function handleInput(data, vis, popup, config) {
   // set to true when a node is clicked
   let selectedNode = false
 
@@ -45,6 +45,10 @@ function handleInput(data, vis, popup) {
       unhighlight(data.rootNode)
       popup.hide()
     }
+  })
+
+  vis.node.on('dblclick', d => {
+    if (config.onDoubleClick) config.onDoubleClick(d.name)
   })
 }
 

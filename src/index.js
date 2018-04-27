@@ -19,7 +19,7 @@ function createVisualization(inputData, config = {}) {
 
   layout(data, vis, { width, height })
 
-  handleInput(data, vis, popup)
+  handleInput(data, vis, popup, config)
 
   function attach(container) {
     container.appendChild(root)
